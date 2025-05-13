@@ -36,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <body className={`${roboto.className} antialiased`}>
+      <body className={`${roboto.className} relative antialiased`}>
         <HeaderNavigation />
         {children}
       </body>

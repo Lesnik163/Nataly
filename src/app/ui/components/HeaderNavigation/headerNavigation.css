@@ -1,0 +1,35 @@
+.headerContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.headerContainer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    transparent 0%,
+    rgb(255, 255, 255) 48%,
+    rgba(255, 255, 255, 0.7) 52%,
+    transparent 100%
+  );
+  animation: headerBlick 6s infinite;
+  filter: blur(10px);
+  opacity: 1;
+  height: 50%;
+  top: -50%;
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: center;
+}
+
+@keyframes headerBlick {
+  0% {
+    transform: translateX(-100%) rotate(8deg);
+  }
+  20%,
+  100% {
+    transform: translateX(100%) rotate(8deg);
+  }
+}

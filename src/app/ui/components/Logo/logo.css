@@ -1,0 +1,67 @@
+.logoImageContainer {
+  position: relative;
+  padding: 4px;
+  border-radius: 50%;
+  overflow: hidden;
+  &:active {
+    box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.5);
+    scale: 96%;
+  }
+}
+.logoGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.logoGlow::before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 25%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.8) 75%,
+    transparent 100%
+  );
+  animation: logoBlick 6s infinite;
+  filter: blur(15px);
+  transform-origin: center;
+}
+@keyframes logoBlick {
+  0% {
+    transform: translateX(-100%) rotate(15deg);
+  }
+  20%,
+  100% {
+    transform: translateX(130%) rotate(15deg);
+  }
+}
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 25px 10px rgba(255, 255, 255, 0);
+  }
+}
+
+.animate-pulseGlow {
+  &:active {
+    scale: 98%;
+  }
+  animation: pulseGlow 6s ease-in-out infinite;
+}
