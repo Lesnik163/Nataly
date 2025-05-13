@@ -1,0 +1,61 @@
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-scaleIn {
+  font-weight: 900;
+  font-family: Arial, Helvetica, sans-serif;
+  animation: scaleIn 2s ease-in-out forwards;
+}
+
+.sliding-word {
+  font-size: 30px;
+  animation: scaleIn 1s ease-in-out forwards;
+  opacity: 0;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 2px black;
+  stroke: 2px black;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
