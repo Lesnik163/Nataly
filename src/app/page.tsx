@@ -13,7 +13,7 @@ export default function Home() {
       <Greeting />
       <FireWorkBottom />
       <div className='h-screen w-full bg-rose-800/10 bg-[url(/bubbles.svg)] bg-cover bg-center bg-no-repeat'>
-        2й блок
+        2й блок проверка зеркалирования
       </div>
     </>
   );
