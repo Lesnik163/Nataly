@@ -1,0 +1,75 @@
+image: node:22-alpine
+
+stages:
+  - install
+  - build
+  - docker
+  - deploy
+
+variables:
+  DOCKER_REGISTRY: ${CI_REGISTRY}
+  DOCKER_IMAGE_CI: ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_REF_SLUG}
+  DOCKER_IMAGE_PROD: ${CI_REGISTRY_IMAGE}/prod:${CI_COMMIT_REF_SLUG}
+
+cache:
+  paths:
+    - node_modules/
+    - .next/
+
+install:
+  stage: install
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm run lint
+    - npm run build
+  artifacts:
+    paths:
+      - .next/
+
+docker:
+  stage: docker
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    # Сборка CI версии (только Next.js)
+    - docker build -t $DOCKER_IMAGE_CI -f Dockerfile.ci .
+    - docker push $DOCKER_IMAGE_CI
+    # Сборка PROD версии (с Nginx)
+    - docker build -t $DOCKER_IMAGE_PROD -f Dockerfile .
+    - docker push $DOCKER_IMAGE_PROD
+  only:
+    - main
+    - develop
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Deploy to staging server"
+    # Используем CI версию для staging
+    - echo "Using image: $DOCKER_IMAGE_CI"
+  environment:
+    name: staging
+  only:
+    - develop
+
+deploy_production:
+  stage: deploy
+  script:
+    - echo "Deploy to production server"
+    # Используем PROD версию с Nginx для production
+    - echo "Using image: $DOCKER_IMAGE_PROD"
+  environment:
+    name: production
+  only:
+    - main
+  when: manual
