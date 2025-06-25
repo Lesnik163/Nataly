@@ -1,75 +1,37 @@
-image: node:22-alpine
-
 stages:
-  - install
   - build
-  - docker
+  - test
   - deploy
 
 variables:
-  DOCKER_REGISTRY: ${CI_REGISTRY}
-  DOCKER_IMAGE_CI: ${CI_REGISTRY_IMAGE}/ci:${CI_COMMIT_REF_SLUG}
-  DOCKER_IMAGE_PROD: ${CI_REGISTRY_IMAGE}/prod:${CI_COMMIT_REF_SLUG}
-
-cache:
-  paths:
-    - node_modules/
-    - .next/
-
-install:
-  stage: install
-  script:
-    - npm ci
-  artifacts:
-    paths:
-      - node_modules/
+    OWNER_NAME: DMITRII LIUBICH
+    CICD_VERSION: v1.0.1
+    LOG_FILE_NAME: log.txt
 
 build:
   stage: build
+  script: 
+    - echo "build started!"
+    - echo "building ..." >> ${LOG_FILE_NAME}
+    - echo "build completed"
+  
+test1: 
+  stage: test
   script:
-    - npm run lint
-    - npm run build
-  artifacts:
-    paths:
-      - .next/
+    - echo "test1 started!"
+    - echo "testing ..." >> ${LOG_FILE_NAME}
+    - echo "test1 completed"
 
-docker:
-  stage: docker
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+test2: 
+  stage: test
   script:
-    # Сборка CI версии (только Next.js)
-    - docker build -t $DOCKER_IMAGE_CI -f Dockerfile.ci .
-    - docker push $DOCKER_IMAGE_CI
-    # Сборка PROD версии (с Nginx)
-    - docker build -t $DOCKER_IMAGE_PROD -f Dockerfile .
-    - docker push $DOCKER_IMAGE_PROD
-  only:
-    - main
-    - develop
+    - echo "test2 started!"
+    - echo "testing ..." >> ${LOG_FILE_NAME}
+    - echo "test2 completed"
 
-deploy_staging:
+deploy_to_dev: 
   stage: deploy
   script:
-    - echo "Deploy to staging server"
-    # Используем CI версию для staging
-    - echo "Using image: $DOCKER_IMAGE_CI"
-  environment:
-    name: staging
-  only:
-    - develop
-
-deploy_production:
-  stage: deploy
-  script:
-    - echo "Deploy to production server"
-    # Используем PROD версию с Nginx для production
-    - echo "Using image: $DOCKER_IMAGE_PROD"
-  environment:
-    name: production
-  only:
-    - main
-  when: manual
+    - echo "deploy to DEV started!"
+    - echo "deploing ..." >> ${LOG_FILE_NAME}
+    - echo "deploy to DEV completed"
