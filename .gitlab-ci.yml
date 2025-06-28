@@ -12,26 +12,27 @@ build:
   stage: build
   script: 
     - echo "build started!"
-    - echo "building ..." >> ${LOG_FILE_NAME}
+    - echo "building ..." >> $LOG_FILE_NAME
     - echo "build completed"
   
 test1: 
   stage: test
   script:
     - echo "test1 started!"
-    - echo "testing ..." >> ${LOG_FILE_NAME}
+    - echo "testing ..." >> $LOG_FILE_NAME
     - echo "test1 completed"
 
 test2: 
   stage: test
   script:
     - echo "test2 started!"
-    - echo "testing ..." >> ${LOG_FILE_NAME}
+    - echo "testing ..." >> $LOG_FILE_NAME
     - echo "test2 completed"
 
 deploy_to_dev: 
   stage: deploy
   script:
     - echo "deploy to DEV started!"
-    - echo "deploing ..." >> ${LOG_FILE_NAME}
+    - echo "deploing ..." >> $LOG_FILE_NAME
     - echo "deploy to DEV completed"
+    - cat $LOG_FILE_NAME
