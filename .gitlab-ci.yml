@@ -1,37 +1,44 @@
 stages:
+  - build-image
   - build
-  - test
-  - deploy
+  - lint
 
 variables:
-    OWNER_NAME: DMITRII LIUBICH
-    CICD_VERSION: v1.0.1
-    LOG_FILE_NAME: log.txt
+  OWNER_NAME: DMITRII LIUBICH
+  CICD_VERSION: v1.0.1
+  LOG_FILE_NAME: log.txt
+  SUCCESS_MESSAGE: "completed successfully"
 
+# Сначала собираем образ
+build-image:
+  stage: build-image
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    # Отладочная информация (можно убрать в продакшн)
+    - echo "Registry: $CI_REGISTRY"
+    - echo "Registry User: $CI_REGISTRY_USER"
+    - echo "Registry Image: $CI_REGISTRY_IMAGE"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -f Dockerfile.ci -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - echo "Image built and pushed successfully"
+
+# Затем используем готовый образ
 build:
   stage: build
-  script: 
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  script:
     - echo "build started!"
-    - echo "building ..." >> ${LOG_FILE_NAME}
-    - echo "build completed"
-  
-test1: 
-  stage: test
-  script:
-    - echo "test1 started!"
-    - echo "testing ..." >> ${LOG_FILE_NAME}
-    - echo "test1 completed"
+    - npm run build
+    - echo "build $SUCCESS_MESSAGE"
 
-test2: 
-  stage: test
+lint:
+  stage: lint
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   script:
-    - echo "test2 started!"
-    - echo "testing ..." >> ${LOG_FILE_NAME}
-    - echo "test2 completed"
-
-deploy_to_dev: 
-  stage: deploy
-  script:
-    - echo "deploy to DEV started!"
-    - echo "deploing ..." >> ${LOG_FILE_NAME}
-    - echo "deploy to DEV completed"
+    - echo "lint started!"
+    - npm run lint
+    - echo "lint $SUCCESS_MESSAGE"
