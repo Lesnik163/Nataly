@@ -15,11 +15,7 @@ RUN apk add --no-cache nodejs npm curl
 ENV NODE_ENV=production PORT=3000 HOSTNAME=0.0.0.0
 
 # Копируем только необходимое
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
+COPY --from=builder /app ./
 
 # Оптимизация для production
 RUN apk add --no-cache curl  # Для healthcheck
