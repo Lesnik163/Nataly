@@ -7,7 +7,7 @@ variables:
   OWNER_NAME: DMITRII LIUBICH
   CICD_VERSION: v1.0.1
   LOG_FILE_NAME: log.txt
-  SUCCESS_MESSAGE: "completed successfully"
+  SUCCESS_MESSAGE: 'completed successfully'
 
 # Сначала собираем образ
 build-image:
@@ -15,11 +15,6 @@ build-image:
   image: docker:latest
   services:
     - docker:dind
-  before_script:
-    - echo "Registry: $CI_REGISTRY"
-    - echo "Registry User: $CI_REGISTRY_USER"
-    - echo "Registry Image: $CI_REGISTRY_IMAGE"
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker build -f Dockerfile.ci -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
