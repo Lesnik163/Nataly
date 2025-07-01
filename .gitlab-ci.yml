@@ -56,6 +56,8 @@ lint:
   script:
     - which npm
     - npm -v
+    - ls -la
+    - ls -la node_modules/.bin/ | grep next
     - echo "Lint started!" >> $LOG_FILE_NAME
     - npm run lint >> $LOG_FILE_NAME
     - echo "lint $SUCCESS_MESSAGE" >> $LOG_FILE_NAME
