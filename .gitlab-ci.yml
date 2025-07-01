@@ -20,7 +20,7 @@ build-image:
     - docker info
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker build --pull --no-cache -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker build -f Dockerfile.ci --pull --no-cache -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - echo "Image built and pushed successfully" > $LOG_FILE_NAME
     - echo "DOCKER_IMAGE=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" > build.env
