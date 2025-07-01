@@ -21,12 +21,9 @@ build-image:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker build -f Dockerfile.ci --pull --no-cache -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - docker build -f Dockerfile.lint --pull --no-cache -t $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}-lint .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}-lint
-    - echo "Images built and pushed successfully" > $LOG_FILE_NAME
+    - echo "Image built and pushed successfully" > $LOG_FILE_NAME
     - echo "DOCKER_IMAGE=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" > build.env
-    - echo "DOCKER_IMAGE_LINT=$CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}-lint" >> build.env
   artifacts:
     reports:
       dotenv: build.env
@@ -51,12 +48,12 @@ build:
 
 lint:
   stage: lint
-  image: $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA}-lint
+  image: node:22-alpine
   needs: ['build-image']
   script:
     - which npm
     - npm -v
-    - ls -la
+    - npm ci
     - ls -la node_modules/.bin/ | grep next
     - echo "Lint started!" >> $LOG_FILE_NAME
     - npm run lint >> $LOG_FILE_NAME
