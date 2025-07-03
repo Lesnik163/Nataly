@@ -1,0 +1,71 @@
+stages:
+  - build-image
+  - build
+  - code-quality
+
+variables:
+  OWNER_NAME: 'DMITRII LIUBICH'
+  CICD_VERSION: 'v1.0.1'
+  LOG_FILE_NAME: log.txt
+  SUCCESS_MESSAGE: 'completed successfully'
+  DOCKER_TLS_CERTDIR: '/certs'
+
+# Сначала собираем образы
+build-image:
+  stage: build-image
+  image: docker:24.0
+  services:
+    - docker:24.0-dind
+  before_script:
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -f Dockerfile.ci --pull --no-cache -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - echo "Image built and pushed successfully" > $LOG_FILE_NAME
+    - echo "DOCKER_IMAGE=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA" > build.env
+  artifacts:
+    reports:
+      dotenv: build.env
+    paths:
+      - $LOG_FILE_NAME
+    expire_in: 1 hour # Артефакты build-image не нужны долго
+
+# Затем используем готовый образ
+build:
+  stage: build
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  needs: ['build-image']
+  script:
+    - echo "Build verification started!" > $LOG_FILE_NAME
+    - node --version >> $LOG_FILE_NAME
+    - ls -la >> $LOG_FILE_NAME
+    - echo "build $SUCCESS_MESSAGE" >> $LOG_FILE_NAME
+  artifacts:
+    paths:
+      - $LOG_FILE_NAME
+    expire_in: 1 week
+
+ts-check:
+  stage: code-quality
+  image: node:22-alpine
+  needs: ['build-image']
+  script:
+    - npm ci
+    - npm run ts:check
+
+lint:
+  stage: code-quality
+  image: node:22-alpine
+  needs: ['build-image']
+  script:
+    - npm ci
+    - npm run lint
+
+prettier:
+  stage: code-quality
+  image: node:22-alpine
+  needs: ['build-image']
+  script:
+    - npm ci
+    - npm run prettier
