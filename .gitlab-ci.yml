@@ -55,6 +55,7 @@ code-quality:
     - npm ci
     - ls -la node_modules/.bin/ | grep next
     - echo "Code quality check started!" >> $LOG_FILE_NAME
+    - npm run ts:check >> $LOG_FILE_NAME
     - npm run lint >> $LOG_FILE_NAME
     - npm run prettier >> $LOG_FILE_NAME
     - echo "code-quality $SUCCESS_MESSAGE" >> $LOG_FILE_NAME
