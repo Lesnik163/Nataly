@@ -16,7 +16,13 @@ const Logo = () => {
         <div className='hidden xl:block'>Nataly</div>
         <div className='logoImageContainer'>
           <div className='logoGlow'></div>
-          <Image src='/logo.svg' alt='Логотип' width={80} height={80} />
+          <Image
+            src='/logo.svg'
+            alt='Логотип'
+            width={80}
+            height={80}
+            priority={true}
+          />
         </div>
         <div className='ml-[10px] hidden xl:block'>Lash</div>
       </div>

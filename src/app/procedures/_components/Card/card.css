@@ -1,0 +1,9 @@
+.card-container {
+  container-type: inline-size;
+}
+
+@container (max-width: 400px) {
+  .card-price-text {
+    display: none;
+  }
+}

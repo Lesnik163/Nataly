@@ -1,21 +1,22 @@
 'use client';
 
 import React from 'react';
-import HeaderLink from '../HeaderLink';
 import Logo from '../Logo';
+import { BurgerMenu } from '../BurgerMenu';
+import { DesktopMenu } from '../DesktopMenu';
+import { useScrollEffect } from './useScrollEffect';
 
 import './headerNavigation.css';
 
 export const HeaderNavigation = () => {
+  const isScrolled = useScrollEffect();
+
   return (
-    <div className='headerContainer h-[100px] items-center rounded-b-[10px] bg-rose-300'>
-      <div className='fixed top-0 z-50 flex h-[100px] w-full items-center justify-between'>
+    <div className='headerContainer h-[100px] items-center rounded-b-[10px] bg-gradient-to-r from-rose-400 to-pink-400'>
+      <div className='fixed top-0 z-50 flex h-[100px] w-full items-center justify-between px-4'>
         <Logo />
-        <HeaderLink href='/about' text='Обо мне' />
-        <HeaderLink href='/procedures' text='Процедуры' />
-        <HeaderLink href='/prices' text='Цены' />
-        <HeaderLink href='/information' text='Информация' />
-        <HeaderLink href='/contacts' text='Контакты' />
+        <DesktopMenu isScrolled={isScrolled} />
+        <BurgerMenu isScrolled={isScrolled} />
       </div>
 
       <div className='headerBlick pointer-events-none absolute inset-0 z-10' />

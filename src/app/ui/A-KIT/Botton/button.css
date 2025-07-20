@@ -1,0 +1,39 @@
+@keyframes buttonBlick {
+  0% {
+    transform: translateX(-100%) rotate(20deg);
+  }
+  7%,
+  100% {
+    transform: translateX(100%) rotate(20deg);
+  }
+}
+
+.button-blick {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to left,
+    transparent 35%,
+    rgb(255, 255, 255) 48%,
+    rgba(255, 255, 255, 0.7) 52%,
+    transparent 65%
+  );
+
+  animation: buttonBlick 6s ease-in-out infinite;
+  opacity: 1;
+  height: 130%;
+  top: -20%;
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: center;
+}
+
+.group:hover .button-blick {
+  opacity: 0;
+}
+
+.group:not(:hover) .button-blick {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
