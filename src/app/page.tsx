@@ -1,4 +1,5 @@
 import Greeting from './ui/components/Greeting';
+import { GreetingInformation } from './ui/components/GreetingInformation';
 import { FireWorkBottom, FireWorkTop } from './ui/components/Fireworks';
 
 export default function Home() {
@@ -12,9 +13,7 @@ export default function Home() {
       <FireWorkTop />
       <Greeting />
       <FireWorkBottom />
-      <div className='h-screen w-full bg-rose-800/10 bg-[url(/bubbles.svg)] bg-cover bg-center bg-no-repeat'>
-        2й блок проверка зеркалирования
-      </div>
+      <GreetingInformation />
     </>
   );
 }

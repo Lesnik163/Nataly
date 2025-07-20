@@ -7,7 +7,7 @@ import './logo.css';
 
 const Logo = () => {
   return (
-    <Link href='/' tabIndex={-1}>
+    <Link href='/' tabIndex={-1} scroll={false}>
       <div
         className={`animate-pulseGlow relative ml-[15px] mr-[50px] flex rounded-[44%] px-[44px] 
           text-[50px] shadow-[0_0_25px_10px_rgba(255,255,255,0.5)] ${culpa.className} antialiased
@@ -16,7 +16,13 @@ const Logo = () => {
         <div className='hidden xl:block'>Nataly</div>
         <div className='logoImageContainer'>
           <div className='logoGlow'></div>
-          <Image src='/logo.svg' alt='Логотип' width={80} height={80} />
+          <Image
+            src='/logo.svg'
+            alt='Логотип'
+            width={80}
+            height={80}
+            priority={true}
+          />
         </div>
         <div className='ml-[10px] hidden xl:block'>Lash</div>
       </div>

@@ -11,14 +11,18 @@ export const FireWorkTop = () => {
           alt='firework'
           width={80}
           height={80}
-          className='ml-[50px] mt-[50px] block scale-[2] scale-x-[-2]'
+          priority={true}
+          className='ml-[50px] mt-[50px] block -scale-x-100'
+          style={{ width: 'auto', height: 'auto' }}
         />
         <Image
           src={'/firework.svg'}
           alt='firework'
           width={80}
           height={80}
-          className='mr-[50px] mt-[50px] block scale-[2]'
+          priority={true}
+          className='mr-[50px] mt-[50px] block'
+          style={{ width: 'auto', height: 'auto' }}
         />
       </div>
     </div>
@@ -34,14 +38,18 @@ export const FireWorkBottom = () => {
           alt='firework'
           width={80}
           height={80}
-          className='mb-[50px] ml-[50px] block rotate-180 scale-[2]'
+          priority={true}
+          className='mb-[50px] ml-[50px] block rotate-180'
+          style={{ width: 'auto', height: 'auto' }}
         />
         <Image
           src={'/firework.svg'}
           alt='firework'
           width={80}
           height={80}
-          className='mb-[50px] mr-[50px] block rotate-180 scale-[2] scale-x-[-2]'
+          priority={true}
+          className='mb-[50px] mr-[50px] block rotate-180 -scale-x-100'
+          style={{ width: 'auto', height: 'auto' }}
         />
       </div>
     </div>
