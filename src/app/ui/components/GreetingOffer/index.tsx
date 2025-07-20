@@ -4,8 +4,16 @@ import React from 'react';
 import { DecorationBubbles } from '../../A-KIT/DecorationBubbles';
 import { useIntersectionObserver } from './useIntersectionObserver';
 
+const getListItemClasses = (isVisible: boolean) => ({
+  item1: `font-medium text-rose-700 opacity-0 before:mr-3 before:text-rose-500 before:content-["→"] ${isVisible ? 'animate-[slideInRight_0.8s_ease-out_forwards]' : ''}`,
+  item2: `font-medium text-rose-700 opacity-0 before:mr-3 before:text-rose-500 before:content-["→"] ${isVisible ? 'animate-[slideInLeft_0.8s_ease-out_forwards]' : ''}`,
+  item3: `font-medium text-rose-700 opacity-0 before:mr-3 before:text-rose-500 before:content-["→"] ${isVisible ? 'animate-[slideInRight_0.8s_ease-out_forwards]' : ''}`,
+});
+
 export const GreetingOffer = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
+  const listItemClasses = getListItemClasses(isVisible);
+
   return (
     <div
       ref={elementRef}
@@ -16,27 +24,18 @@ export const GreetingOffer = () => {
       </h1>
       <ul className='relative space-y-3 overflow-hidden pl-8 md:pl-12'>
         <li
-          className={`font-medium text-rose-700 opacity-0 before:mr-3 before:text-rose-500 before:content-["→"] ${
-            isVisible ? 'animate-[slideInRight_0.8s_ease-out_forwards]' : ''
-          }`}
+          className={listItemClasses.item1}
           style={{ animationDelay: '0.5s' }}
         >
           Шугаринг недорого и без боли;
         </li>
 
-        <li
-          className={`font-medium text-rose-700 opacity-0 before:mr-3 before:text-rose-500 before:content-["→"] ${
-            isVisible ? 'animate-[slideInLeft_0.8s_ease-out_forwards]' : ''
-          }`}
-          style={{ animationDelay: '1s' }}
-        >
+        <li className={listItemClasses.item2} style={{ animationDelay: '1s' }}>
           Ресницы любой формы и пышности;
         </li>
 
         <li
-          className={`font-medium text-rose-700 opacity-0 before:mr-3 before:text-rose-500 before:content-["→"] ${
-            isVisible ? 'animate-[slideInRight_0.8s_ease-out_forwards]' : ''
-          }`}
+          className={listItemClasses.item3}
           style={{ animationDelay: '1.5s' }}
         >
           Бровки красивой формы;

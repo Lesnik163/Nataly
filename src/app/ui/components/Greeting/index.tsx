@@ -5,7 +5,7 @@ import { GreetingText } from '../GreetingText';
 
 import './greeting.css';
 
-const Greeting = () => {
+const GreetingComponent = () => {
   return (
     <div className='relative z-10 flex h-[calc(screen-100px)] flex-col items-center justify-between'>
       <GreetingText />
@@ -15,4 +15,4 @@ const Greeting = () => {
   );
 };
 
-export default Greeting;
+export default React.memo(GreetingComponent);

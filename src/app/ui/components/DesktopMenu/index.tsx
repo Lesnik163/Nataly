@@ -5,7 +5,7 @@ type DesktopMenuProps = {
   isScrolled: boolean;
 };
 
-export const DesktopMenu = ({ isScrolled }: DesktopMenuProps) => {
+const DesktopMenuComponent = ({ isScrolled }: DesktopMenuProps) => {
   return (
     <div className='hidden items-center gap-4 lg:flex'>
       <HeaderLink href='/about' text='Обо мне' isScrolled={isScrolled} />
@@ -20,3 +20,5 @@ export const DesktopMenu = ({ isScrolled }: DesktopMenuProps) => {
     </div>
   );
 };
+
+export const DesktopMenu = React.memo(DesktopMenuComponent);

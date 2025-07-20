@@ -1,7 +1,7 @@
 import React from 'react';
 import { WhyMePoint } from '../WhyMePoint';
 
-export const WhyMe = () => {
+const WhyMeComponent = () => {
   return (
     <div className='mx-4 rounded-2xl border border-rose-200/50 bg-white/80 p-8 shadow-lg backdrop-blur-sm md:mx-0'>
       <h3 className='mb-4 text-2xl font-bold text-rose-800'>
@@ -16,3 +16,5 @@ export const WhyMe = () => {
     </div>
   );
 };
+
+export const WhyMe = React.memo(WhyMeComponent);
