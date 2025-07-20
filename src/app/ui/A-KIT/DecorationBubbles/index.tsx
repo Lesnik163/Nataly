@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 type DecorationBubbleProps = {
   className?: string;
@@ -16,19 +16,25 @@ interface DecorationBubblesProps {
   className?: string;
 }
 
+const getPositionStyle = (position: DecorationBubbleProps['position']) => ({
+  right: position.right,
+  top: position.top,
+  left: position.left,
+  bottom: position.bottom,
+});
+
 const DecorationBubble = ({
   className = '',
   position,
   size = 'size-12',
   color = 'bg-rose-300',
 }: DecorationBubbleProps) => {
-  const positionClasses = Object.entries(position)
-    .map(([key, value]) => `${key}-[${value}]`)
-    .join(' ');
+  const positionStyle = useMemo(() => getPositionStyle(position), [position]);
 
   return (
     <div
-      className={`absolute z-10 opacity-40 transition-opacity duration-300 group-hover:opacity-60 ${positionClasses} ${className}`}
+      className={`absolute z-10 opacity-40 transition-opacity duration-300 group-hover:opacity-60 ${className}`}
+      style={positionStyle}
     >
       <div className={`${size} rounded-full ${color}`}></div>
     </div>
