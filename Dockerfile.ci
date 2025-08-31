@@ -5,6 +5,7 @@ COPY package*.json ./
 RUN npm ci && \  
 rm -rf /root/.npm
 COPY . .
+RUN npm run db:generate
 RUN npm run build
 
 # Stage 2: Runtime
