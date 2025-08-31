@@ -1,9 +1,11 @@
-import { procedures } from '@/mockDB/procedures';
+import { getProcedures } from '@/lib/services/procedures';
 import { Card } from './_components/Card';
 import { HeaderContent } from './_components/HeaderContent';
 import { BottomAdditional } from './_components/BottomAdditional';
 
-const Procedures = () => {
+const Procedures = async () => {
+  const procedures = await getProcedures();
+
   return (
     <div className='min-h-screen bg-gradient-to-br from-rose-50 to-pink-100 py-16'>
       <div className='container mx-auto px-4'>
