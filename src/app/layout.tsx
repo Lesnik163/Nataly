@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 import { roboto } from './ui/fonts';
-import { HeaderNavigation } from './ui/components/HeaderNavigation';
+import { HeaderNavigation } from './ui/A-KIT/HeaderNavigation';
 
 export const metadata: Metadata = {
   title: 'Nataly_Lash',
@@ -35,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ru'>
+    <html lang='ru' data-scroll-behavior='smooth'>
       <body className={`${roboto.className} relative antialiased`}>
         <HeaderNavigation />
         {children}

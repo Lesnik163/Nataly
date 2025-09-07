@@ -22,7 +22,7 @@ const eslintConfig = [
     'plugin:tailwindcss/recommended',
   ),
   {
-    ignores: ['.next/', 'node_modules/'],
+    ignores: ['.next/', 'node_modules/', 'fusionbrain-mcp/'],
     rules: {
       'react/react-in-jsx-scope': 'off',
       'prettier/prettier': 'off',

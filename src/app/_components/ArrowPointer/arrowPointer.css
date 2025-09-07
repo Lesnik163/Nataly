@@ -1,0 +1,17 @@
+@keyframes arrowPulse {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(10px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+}
+
+.animate-arrow-pulse {
+  animation: arrowPulse 2s ease-in-out infinite;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/app/ui/A-KIT/Botton';
+import { Button } from '@/app/ui/A-KIT/Button';
 import { DecorationBubbles } from '@/app/ui/A-KIT/DecorationBubbles';
 import './card.css';
 
@@ -39,7 +39,12 @@ export const Card: React.FC<CardProps> = ({ procedure }) => {
           ) : (
             <div className='font-semibold text-rose-600'>Зависит от зоны</div>
           )}
-          <Button type='primary' size='md'>
+          <Button
+            type='primary'
+            size='md'
+            className='focus-within:shadow-[0_0_0_2px_rgba(255,255,255,1),_0_0_0_6px_rgba(190,18,60,0.95)]'
+            ariaLabel={`Записаться на ${procedure.title}`}
+          >
             Записаться
           </Button>
         </div>
