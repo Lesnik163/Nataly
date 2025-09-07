@@ -1,10 +1,12 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export const OrderSection = () => {
   return (
     <section className='mx-auto w-full max-w-6xl px-4 py-16'>
       <div className='rounded-3xl bg-gradient-to-r from-rose-400 to-pink-400 p-8 text-center text-white shadow-lg'>
-        <h3 className='mb-3 text-2xl font-bold md:text-3xl'>Ты всегда безупречна!</h3>
+        <h3 className='mb-3 text-2xl font-bold md:text-3xl'>
+          Ты всегда безупречна!
+        </h3>
         <p className='mx-auto mb-6 max-w-2xl text-white/90'>
           Запишитесь онлайн — и я подберу идеальный образ для Вас.
         </p>

@@ -13,7 +13,9 @@ const HeaderLink = ({ text, href }: HeaderLinkProps) => {
   const isActive = pathname === href;
 
   return (
-    <div className={`header-link h-[86%] w-[152px] items-center lg:flex ${isActive ? 'active' : ''}`}>
+    <div
+      className={`header-link h-[86%] w-[152px] items-center lg:flex ${isActive ? 'active' : ''}`}
+    >
       <Link
         href={href}
         aria-current={isActive ? 'page' : undefined}

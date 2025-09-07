@@ -1,4 +1,4 @@
-import { DecorationBubbles } from "@/app/ui/A-KIT/DecorationBubbles";
+import { DecorationBubbles } from '@/app/ui/A-KIT/DecorationBubbles';
 
 const listItemClasses = {
   item1:

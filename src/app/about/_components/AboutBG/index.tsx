@@ -5,5 +5,5 @@ export const AboutBG = () => {
       w-full bg-[url(/home_page/about_me_page_md.jpg)] bg-cover bg-no-repeat
        md:bg-[url(/home_page/about_me_page_xl.jpg)] md:bg-center'
     ></div>
-  )
-}
+  );
+};

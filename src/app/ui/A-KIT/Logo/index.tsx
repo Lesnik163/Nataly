@@ -7,7 +7,13 @@ import './logo.css';
 
 const Logo = () => {
   return (
-    <Link href='/' tabIndex={-1} scroll={false} aria-label='Ссылка на главную страницу' aria-current='page'>
+    <Link
+      href='/'
+      tabIndex={-1}
+      scroll={false}
+      aria-label='Ссылка на главную страницу'
+      aria-current='page'
+    >
       <div
         className={`animate-pulseGlow relative ml-[15px] mr-[50px] flex rounded-[44%] px-[44px] 
           text-[50px] shadow-[0_0_25px_10px_rgba(255,255,255,0.5)] ${culpa.className} antialiased

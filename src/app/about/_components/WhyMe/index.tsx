@@ -1,4 +1,4 @@
-import { WhyMePoint } from "../WhyMePoint";
+import { WhyMePoint } from '../WhyMePoint';
 const WhyMe = () => {
   return (
     <div className='mx-4 rounded-2xl border border-rose-200/50 bg-white/80 p-8 shadow-lg backdrop-blur-sm md:mx-0'>

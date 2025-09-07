@@ -1,7 +1,7 @@
-import { ArrowPointer } from "../ArrowPointer";
-import { AttractiveHeader } from "../AttractiveHeader";
-import { AttractiveHashTags } from "../AttractiveHashTags";
-import { ShowButton } from "../ShowButton";
+import { ArrowPointer } from '../ArrowPointer';
+import { AttractiveHeader } from '../AttractiveHeader';
+import { AttractiveHashTags } from '../AttractiveHashTags';
+import { ShowButton } from '../ShowButton';
 
 export const HeaderSection = () => {
   return (
