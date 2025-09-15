@@ -18,3 +18,20 @@ body {
   color: var(--foreground);
   background: var(--background);
 }
+
+html[data-scroll-behavior='smooth'] {
+  scroll-behavior: smooth;
+}
+
+*:focus {
+  outline: none;
+}
+*:focus-visible {
+  outline: none;
+}
+button,
+[type='button'],
+[type='submit'],
+a {
+  -webkit-tap-highlight-color: transparent;
+}
