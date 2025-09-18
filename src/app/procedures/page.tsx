@@ -1,4 +1,4 @@
-import { getProcedures } from '@/lib/services/procedures';
+import { getProcedures } from '@/features/api/procedure/getProcedures';
 import { Card } from './_components/Card';
 import { HeaderContent } from './_components/HeaderContent';
 import { BottomAdditional } from './_components/BottomAdditional';

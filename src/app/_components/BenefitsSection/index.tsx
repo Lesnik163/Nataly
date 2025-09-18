@@ -1,5 +1,5 @@
-import { DecorationBubbles } from '@/app/ui/A-KIT/DecorationBubbles';
-import { benefits } from '@/mockDB/benefits';
+import { DecorationBubbles } from '@/shared/ui/bubbles';
+import { benefits } from '@/shared/mocks/benefits';
 
 export const BenefitsSection = () => {
   return (

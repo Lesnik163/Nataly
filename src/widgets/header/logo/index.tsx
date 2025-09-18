@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { culpa } from '@/app/ui/fonts';
+import { culpa } from '@/shared/lib/fonts';
 
 import './logo.css';
 

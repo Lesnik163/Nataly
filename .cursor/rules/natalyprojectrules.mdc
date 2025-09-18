@@ -18,98 +18,77 @@ alwaysApply: true
 - Use `unknown` instead of `any` if type is unknown
 - Use `Record<string, unknown>` for objects with unknown structure
 
-## Project Structure
+## Правила импортов
 
-### Root Structure
+1. Разрешенные зависимости:
 
-```
-nataly/
-├── .cursor/                 # Cursor IDE settings
-├── .git/                    # Git repository
-├── .husky/                  # Git hooks
-├── .vscode/                 # VS Code settings
-├── node_modules/            # Dependencies
-├── prisma/                  # Database schema and migrations
-│   └── schema.prisma        # Prisma schema
-├── public/                  # Static assets
-│   ├── home_page/           # Home page images
-│   ├── *.svg               # SVG icons and logos
-│   └── *.jpg               # Images
-├── src/                     # Source code
-│   ├── app/                # Next.js App Router
-│   │   ├── ui/             # UI components and utilities
-│   │   │   ├── components/ # Reusable components
-│   │   │   ├── A-KIT/      # UI kit components
-│   │   │   └── fonts.ts    # Font configurations
-│   │   ├── about/          # About page
-│   │   ├── contacts/       # Contacts page
-│   │   ├── information/    # Information page
-│   │   ├── prices/         # Prices page
-│   │   ├── procedures/     # Procedures page
-│   │   ├── globals.css     # Global styles
-│   │   ├── layout.tsx      # Root layout
-│   │   └── page.tsx        # Home page
-│   └── mockDB/             # Mock database data
-├── .dockerignore           # Docker ignore file
-├── .gitignore              # Git ignore file
-├── .gitlab-ci.yml          # GitLab CI/CD configuration
-├── .prettierrc.json        # Prettier configuration
-├── Dockerfile              # Docker configuration
-├── Dockerfile.ci           # CI Docker configuration
-├── eslint.config.mjs       # ESLint configuration
-├── next-env.d.ts           # Next.js type definitions
-├── next.config.ts          # Next.js configuration
-├── nginx.conf              # Nginx configuration
-├── package.json            # Package configuration
-├── postcss.config.mjs      # PostCSS configuration
-├── tailwind.config.ts      # Tailwind CSS configuration
-├── tsconfig.json           # TypeScript configuration
-└── vite.config.js          # Vite configuration
+   - `app` → все слои
+   - `widgets` → `features`, `entities`, `shared`
+   - `features` → `entities`, `shared`
+   - `entities` → `shared`
+   - `shared` → только внутри себя
+
+2. Запрещено:
+   - Импортировать из верхних слоев в нижние
+   - Импортировать между модулями одного слоя (кроме shared)
+
+## Примеры корректных импортов
+
+```ts
+// widgets/header → features/auth (разрешено)
+import { AuthButton } from '@/features/auth';
+
+// features/auth → entities/user (разрешено)
+import { userModel } from '@/entities/user';
+
+// entities/user → shared/ui (разрешено)
+import { Avatar } from '@/shared/ui';
 ```
 
-### Components Structure
+## Примеры нарушений
 
-```
-src/app/ui/components/
-├── BurgerMenu/             # Mobile menu component
-├── DesktopMenu/            # Desktop navigation
-├── Fireworks/              # Fireworks animation
-├── Greeting/               # Main greeting component
-├── GreetingBackground/     # Greeting background
-├── GreetingCard/           # Greeting card
-├── GreetingInformation/    # Greeting information
-├── GreetingName/           # Greeting name display
-├── GreetingOffer/          # Greeting offer
-├── GreetingText/           # Greeting text
-├── GreetingTitle/          # Greeting title
-├── HeaderLink/             # Header navigation link
-├── HeaderNavigation/       # Header navigation
-├── Logo/                   # Logo component
-├── WhyMe/                  # Why choose us section
-└── WhyMePoint/             # Individual why me point
+```ts
+// shared/ui → features/auth (запрещено!)
+import { useAuth } from '@/features/auth';
+
+// entities/user → widgets/header (запрещено!)
+import { Header } from '@/widgets/header';
 ```
 
-### Page Structure
+## Правила для компонентов
 
-```
-src/app/
-├── about/page.tsx          # About page
-├── contacts/page.tsx       # Contacts page
-├── information/page.tsx    # Information page
-├── prices/page.tsx         # Prices page
-├── procedures/             # Procedures section
-│   ├── _components/        # Procedure-specific components
-│   │   ├── BottomAdditional/
-│   │   ├── Card/
-│   │   ├── HeaderContent/
-│   │   └── WhyMeReason/
-│   └── page.tsx            # Procedures page
-├── globals.css             # Global styles
-├── layout.tsx              # Root layout
-└── page.tsx                # Home page
-```
+1. Виджеты:
 
-## Component Guidelines
+   - Собирают фичи/сущности в крупные блоки
+   - Могут иметь UI-состояние, но не бизнес-логику
+   - Пример: `widgets/header`, `widgets/procedure-list`
+
+2. Фичи:
+
+   - Содержат бизнес-логику конкретной функции
+   - Могут использовать несколько сущностей
+   - Пример: `features/auth`, `features/procedure-filter`
+
+3. Сущности:
+
+   - Описывают бизнес-модели
+   - Не зависят от других слоев
+   - Пример: `entities/user`, `entities/procedure`
+
+4. Shared:
+   - Переиспользуемые UI-компоненты (кнопки, карточки)
+   - Вспомогательные функции (форматирование, API)
+   - Не содержат бизнес-логики
+
+## Рекомендации по разработке
+
+1. Каждый модуль должен иметь публичный API (index.ts)
+2. Использовать абсолютные импорты через `@/`
+3. Тестировать модули изолированно
+4. При рефакторинге:
+   - Сначала создать структуру FSD
+   - Постепенно переносить компоненты
+   - После каждого перемещения проверять работоспособность
 
 ### Component Structure
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button } from '@/app/ui/A-KIT/Button';
-import { DecorationBubbles } from '@/app/ui/A-KIT/DecorationBubbles';
+import { DecorationBubbles } from '@/shared/ui/bubbles';
 import './card.css';
+import { Button } from '@/shared/ui/button';
 
 interface Procedure {
   id: number;

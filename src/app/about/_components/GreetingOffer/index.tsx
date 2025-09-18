@@ -1,4 +1,4 @@
-import { DecorationBubbles } from '@/app/ui/A-KIT/DecorationBubbles';
+import { DecorationBubbles } from '@/shared/ui/bubbles';
 
 const listItemClasses = {
   item1:

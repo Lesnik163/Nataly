@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BurgerModal } from './BurgerModal';
+import { BurgerModal } from './burgerModal';
 
 export const BurgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
