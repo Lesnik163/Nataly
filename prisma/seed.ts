@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { PrismaClient } from '@prisma/client';
-import { procedures } from '../src/mockDB/procedures';
+import { procedures } from '../src/shared/mocks/procedures';
 
 const prisma = new PrismaClient();
 

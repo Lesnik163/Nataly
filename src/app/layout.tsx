@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
-import { roboto } from './ui/fonts';
-import { HeaderNavigation } from './ui/A-KIT/HeaderNavigation';
+import { roboto } from '@/shared/lib/fonts';
+import { HeaderNavigation } from '@/widgets/header';
 
 export const metadata: Metadata = {
   title: 'Nataly_Lash',

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import './burgerMenu.css';
+import '../burgerMenu.css';
 
 type BurgerModalProps = {
   isOpen: boolean;

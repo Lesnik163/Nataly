@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import Logo from '../Logo';
-import { BurgerMenu } from '../BurgerMenu';
-import { DesktopMenu } from '../DesktopMenu';
+import Logo from './logo';
+import { BurgerMenu } from './burger-menu';
+import { DesktopMenu } from './desktop-menu';
 
 import './headerNavigation.css';
 

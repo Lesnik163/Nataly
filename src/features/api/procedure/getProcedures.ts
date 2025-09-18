@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '@/shared/db/prisma';
 
 export async function getProcedures() {
   return await prisma.procedure.findMany({

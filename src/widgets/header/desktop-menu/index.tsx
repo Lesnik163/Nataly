@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderLink from '../HeaderLink';
+import HeaderLink from '@/shared/ui/headerLink';
 
 export const DesktopMenu = () => {
   return (
