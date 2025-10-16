@@ -42,5 +42,5 @@ next-env.d.ts
  
 # MCP local server
 fusionbrain-mcp/
-.cursor/rules/fusionBrainRules.mdc
+.cursor/rules/
 figma-analyzer/

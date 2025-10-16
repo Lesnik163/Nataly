@@ -3,8 +3,9 @@ import './button.css';
 
 interface ButtonProps {
   children: React.ReactNode;
-  type?: 'primary' | 'fill' | 'outline';
+  variant?: 'primary' | 'fill' | 'outline';
   size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
@@ -15,7 +16,7 @@ interface ButtonProps {
 const baseClasses =
   'rounded-lg font-medium transition-all duration-300 shadow-md';
 
-const typeClasses = {
+const variantClasses = {
   primary:
     'bg-gradient-to-r from-rose-500 to-pink-500 text-white hover:from-rose-600 hover:to-pink-600 hover:scale-105',
   fill: 'bg-rose-600 text-white hover:bg-rose-700 hover:scale-105',
@@ -31,12 +32,13 @@ const sizeClasses = {
 
 export const Button: React.FC<ButtonProps> = ({
   children,
-  type = 'primary',
+  variant = 'primary',
   size = 'md',
+  type = 'button',
   onClick,
   className = '',
   disabled = false,
-  showBlick = true,
+  showBlick = false,
   ariaLabel,
 }) => {
   const buttonClasses = useMemo(() => {
@@ -44,12 +46,13 @@ export const Button: React.FC<ButtonProps> = ({
       ? 'opacity-50 cursor-not-allowed hover:scale-100'
       : '';
 
-    return `${baseClasses} ${typeClasses[type]} ${sizeClasses[size]} ${disabledClasses} ${className}`;
-  }, [disabled, type, size, className]);
+    return `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`;
+  }, [disabled, variant, size, className]);
 
   return (
-    <div className='group relative overflow-hidden rounded-lg focus-within:shadow-[0_0_0_2px_rgba(255,255,255,1),_0_0_0_6px_rgba(190,18,60,0.95)] group-focus-visible:shadow-[0_0_0_2px_rgba(255,255,255,1),_0_0_0_6px_rgba(190,18,60,0.95)]'>
+    <div className='group relative overflow-hidden rounded-lg focus-within:shadow-[0_0_0_2px_white,_0_0_0_6px_theme(colors.rose.500/95)] group-focus-visible:shadow-[0_0_0_2px_white,_0_0_0_6px_theme(colors.rose.500/95)]'>
       <button
+        type={type}
         className={buttonClasses}
         onClick={onClick}
         disabled={disabled}
@@ -57,7 +60,7 @@ export const Button: React.FC<ButtonProps> = ({
       >
         {children}
       </button>
-      {showBlick && <div className='button-blick'></div>}
+      {showBlick && !disabled && <div className='button-blick'></div>}
     </div>
   );
 };
