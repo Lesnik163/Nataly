@@ -1,0 +1,37 @@
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid theme('colors.gray.300');
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: theme('colors.white');
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.form-input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px theme('colors.white') inset;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: theme('colors.blue.500');
+  box-shadow: 0 0 0 3px theme('colors.blue.500 / 10%');
+}
+
+.form-input-error {
+  border-color: theme('colors.red.500');
+}
+
+.form-input-error:focus {
+  border-color: theme('colors.red.500');
+  box-shadow: 0 0 0 3px theme('colors.red.500 / 10%');
+}
+
+.form-error {
+  color: theme('colors.red.500');
+  font-size: 0.875rem;
+  margin-top: 4px;
+  display: block;
+}

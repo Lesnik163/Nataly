@@ -9,7 +9,7 @@ export const BurgerMenu = () => {
   };
 
   return (
-    <div className='lg:hidden'>
+    <div className='min-[1210px]:hidden'>
       <button
         onClick={toggleMenu}
         className='relative flex size-8 flex-col items-center justify-center gap-1 rounded-md text-white transition-colors'

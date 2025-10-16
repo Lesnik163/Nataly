@@ -19,7 +19,7 @@ const Logo = () => {
           text-[50px] shadow-[0_0_25px_10px_rgba(255,255,255,0.5)] ${culpa.className} antialiased
           max-xl:mx-[5px]`}
       >
-        <div className='hidden xl:block'>Nataly</div>
+        <div className='hidden min-[1470px]:block'>Nataly</div>
         <div className='logoImageContainer'>
           <div className='logoGlow'></div>
           <Image
@@ -30,7 +30,7 @@ const Logo = () => {
             priority={true}
           />
         </div>
-        <div className='ml-[10px] hidden xl:block'>Lash</div>
+        <div className='ml-[10px] hidden min-[1470px]:block'>Lash</div>
       </div>
     </Link>
   );

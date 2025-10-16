@@ -40,8 +40,9 @@ export const Card: React.FC<CardProps> = ({ procedure }) => {
             <div className='font-semibold text-rose-600'>Зависит от зоны</div>
           )}
           <Button
-            type='primary'
+            variant='primary'
             size='md'
+            showBlick
             className='focus-within:shadow-[0_0_0_2px_rgba(255,255,255,1),_0_0_0_6px_rgba(190,18,60,0.95)]'
             ariaLabel={`Записаться на ${procedure.title}`}
           >
