@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { ErrorBoundary } from '@/shared/ui/error-boundary';
 
 type ModalPortalProps = {
   children: React.ReactNode;
@@ -15,5 +16,6 @@ export const ModalPortal: React.FC<ModalPortalProps> = ({ children }) => {
   }, []);
 
   if (!mounted) return null;
-  return createPortal(children, document.body);
+
+  return createPortal(<ErrorBoundary>{children}</ErrorBoundary>, document.body);
 };
