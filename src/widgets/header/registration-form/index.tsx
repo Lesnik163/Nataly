@@ -9,6 +9,7 @@ import {
   registrationSchema,
   type RegistrationFormData,
 } from './registration-form-schema';
+import { ErrorBoundary } from '@/shared/ui/error-boundary';
 
 interface RegistrationFormProps {
   onClose: () => void;
@@ -114,7 +115,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
   return (
     <FormOverlay onClose={onClose}>
-      <div>
+      <ErrorBoundary>
         <FormHeaderTitle title='Регистрация' onClose={onClose} />
         <FormBody
           onSuccess={onSuccess}
@@ -186,7 +187,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
             data-testid='confirmPassword'
           />
         </FormBody>
-      </div>
+      </ErrorBoundary>
     </FormOverlay>
   );
 };
