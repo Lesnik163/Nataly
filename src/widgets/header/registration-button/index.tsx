@@ -13,10 +13,6 @@ export const RegistrationButton: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleSuccess = () => {
-    // TODO: Добавить логику после успешной регистрации
-  };
-
   return (
     <>
       <Button
@@ -27,12 +23,7 @@ export const RegistrationButton: React.FC = () => {
         Регистрация
       </Button>
 
-      {isModalOpen && (
-        <RegistrationForm
-          onClose={handleCloseModal}
-          onSuccess={handleSuccess}
-        />
-      )}
+      {isModalOpen && <RegistrationForm onClose={handleCloseModal} />}
     </>
   );
 };

@@ -4,11 +4,11 @@ import React, { useActionState, useEffect } from 'react';
 import './form-body.css';
 import { signUpUser } from '@/features/api/auth/signup';
 import { Button } from '../../button';
+import { useNotifications } from '@/shared/lib/store';
 
 interface FormProps {
   children: React.ReactNode;
   className?: string;
-  onSuccess: () => void;
   onClose: () => void;
   errors?: Record<string, string>;
   isFormValid?: boolean;
@@ -17,19 +17,25 @@ interface FormProps {
 export const FormBody: React.FC<FormProps> = ({
   children,
   className = '',
-  onSuccess,
   onClose,
   errors = {},
   isFormValid = true,
 }) => {
   const [state, formAction, isPending] = useActionState(signUpUser, null);
+  const { showSuccess, showError } = useNotifications();
 
   useEffect(() => {
     if (state?.success) {
-      onSuccess?.();
+      showSuccess(
+        'Регистрация успешна!',
+        state.data?.message || 'Добро пожаловать!',
+        4000,
+      );
       onClose();
+    } else if (state?.message) {
+      showError('Ошибка регистрации', state.message, 5000);
     }
-  }, [state, onSuccess, onClose]);
+  }, [state, showSuccess, showError, onClose]);
 
   // Проверяем ошибки валидации полей или общую валидность формы
   const hasErrors =
@@ -59,9 +65,6 @@ export const FormBody: React.FC<FormProps> = ({
             {isPending ? 'Идёт регистрация...' : 'Зарегистрироваться'}
           </Button>
         </div>
-        {state?.message && (
-          <div className='mt-4 text-sm text-red-500'>{state.message}</div>
-        )}
       </form>
     </div>
   );
