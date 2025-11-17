@@ -51,13 +51,24 @@ export async function signUpUser(
     const { name, email, phone, password } = validatedFields.data;
 
     // Проверяем, существует ли пользователь с таким email
-    const existingUser = await prisma.user.findUnique({
+    const existingUserByEmail = await prisma.user.findUnique({
       where: { email },
     });
 
-    if (existingUser) {
+    if (existingUserByEmail) {
       return {
         message: 'Пользователь с таким email уже существует',
+      };
+    }
+
+    // Проверяем, существует ли пользователь с таким телефоном
+    const existingUserByPhone = await prisma.user.findUnique({
+      where: { phone },
+    });
+
+    if (existingUserByPhone) {
+      return {
+        message: 'Пользователь с таким номером телефона уже существует',
       };
     }
 

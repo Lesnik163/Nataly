@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Input } from '@/shared/ui/input';
 import { PhoneInput } from '@/shared/ui/phone-input';
 import { FormBody, FormHeaderTitle, FormOverlay } from '@/shared/ui/form';
-import { validateField } from '@/shared/lib/validation';
+import { validateField, validateForm } from '@/shared/lib/validation';
 import {
   registrationSchema,
   type RegistrationFormData,
@@ -13,12 +13,10 @@ import { ErrorBoundary } from '@/shared/ui/error-boundary';
 
 interface RegistrationFormProps {
   onClose: () => void;
-  onSuccess: () => void;
 }
 
 export const RegistrationForm: React.FC<RegistrationFormProps> = ({
   onClose,
-  onSuccess,
 }) => {
   const [formData, setFormData] = useState<RegistrationFormData>({
     name: '',
@@ -35,12 +33,9 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
   // Проверяем валидность всех полей для блокировки кнопки
   const isFormValid = useMemo(() => {
-    const allFields = Object.keys(formData) as (keyof RegistrationFormData)[];
-    return allFields.every((field) => {
-      const fieldValue = formData[field] ?? '';
-      const fieldError = validateField(registrationSchema, field, fieldValue);
-      return !fieldError;
-    });
+    // Используем validateForm для проверки всей формы, включая совпадение паролей
+    const { isValid } = validateForm(registrationSchema, formData);
+    return isValid;
   }, [formData]);
 
   useEffect(() => {
@@ -77,20 +72,19 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
           const passwordMatch =
             updatedFormData.password === updatedFormData.confirmPassword;
 
-          if (
-            touchedFields.has('confirmPassword') &&
-            !passwordMatch &&
-            updatedFormData.confirmPassword
-          ) {
-            setErrors((prev) => ({
-              ...prev,
-              confirmPassword: 'Пароли не совпадают',
-            }));
-          } else if (passwordMatch) {
-            setErrors((prev) => ({
-              ...prev,
-              confirmPassword: undefined,
-            }));
+          // Проверяем совпадение паролей, если оба поля заполнены
+          if (updatedFormData.password && updatedFormData.confirmPassword) {
+            if (!passwordMatch) {
+              setErrors((prev) => ({
+                ...prev,
+                confirmPassword: 'Пароли не совпадают',
+              }));
+            } else {
+              setErrors((prev) => ({
+                ...prev,
+                confirmPassword: undefined,
+              }));
+            }
           }
         }
       },
@@ -101,14 +95,25 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
     (field: keyof RegistrationFormData) => () => {
       setTouchedFields((prev) => new Set(prev).add(field));
 
-      // Валидируем поле при потере фокуса
-      const fieldValue = formData[field] ?? '';
-      const fieldError = validateField(registrationSchema, field, fieldValue);
-
-      setErrors((prev) => ({
-        ...prev,
-        [field]: fieldError || undefined,
-      }));
+      // Для confirmPassword проверяем совпадение с password через validateForm
+      if (field === 'confirmPassword') {
+        const { errors: formErrors } = validateForm(
+          registrationSchema,
+          formData,
+        );
+        setErrors((prev) => ({
+          ...prev,
+          confirmPassword: formErrors.confirmPassword || undefined,
+        }));
+      } else {
+        // Для остальных полей используем validateField
+        const fieldValue = formData[field] ?? '';
+        const fieldError = validateField(registrationSchema, field, fieldValue);
+        setErrors((prev) => ({
+          ...prev,
+          [field]: fieldError || undefined,
+        }));
+      }
     },
     [formData],
   );
@@ -117,12 +122,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
     <FormOverlay onClose={onClose}>
       <ErrorBoundary>
         <FormHeaderTitle title='Регистрация' onClose={onClose} />
-        <FormBody
-          onSuccess={onSuccess}
-          onClose={onClose}
-          errors={errors}
-          isFormValid={isFormValid}
-        >
+        <FormBody onClose={onClose} errors={errors} isFormValid={isFormValid}>
           <Input
             id='name'
             name='name'

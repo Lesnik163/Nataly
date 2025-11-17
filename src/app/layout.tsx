@@ -4,6 +4,7 @@ import './globals.css';
 import { roboto } from '@/shared/lib/fonts';
 import { HeaderNavigation } from '@/widgets/header';
 import { ErrorBoundary } from '@/shared/ui/error-boundary';
+import { NotificationsContainer } from '@/widgets/notifications';
 
 export const metadata: Metadata = {
   title: 'Nataly_Lash',
@@ -41,6 +42,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <HeaderNavigation />
         </ErrorBoundary>
+        <NotificationsContainer />
         {children}
       </body>
     </html>

@@ -1,0 +1,15 @@
+{
+  // Показывать путь к файлу в табах
+  // "short" - показывает только имя файла (по умолчанию)
+  // "medium" - показывает имя файла + родительскую папку
+  // "long" - показывает полный путь от корня проекта
+  "workbench.editor.labelFormat": "medium",
+  // Показывать путь в табах, когда файлы имеют одинаковые имена
+  "workbench.editor.decorations.badges": true,
+  "workbench.editor.decorations.colors": true,
+  // Включить breadcrumbs (хлебные крошки) для навигации
+  "breadcrumbs.enabled": true,
+  "breadcrumbs.filePath": "on",
+  // Показывать иконки файлов (требует установки расширения)
+  "workbench.iconTheme": "material-icon-theme"
+}
