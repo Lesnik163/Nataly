@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from '@/shared/ui/button';
-import { RegistrationForm } from '../registration-form';
+import { LoginForm } from '../login-form';
 
-export const RegistrationButton: React.FC = () => {
+export const LoginButton: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -18,13 +18,13 @@ export const RegistrationButton: React.FC = () => {
       <Button
         variant='primary'
         onClick={handleOpenModal}
-        ariaLabel='Регистрация'
+        ariaLabel='Войти'
         className='min-w-[140px]'
       >
-        Регистрация
+        Войти
       </Button>
 
-      {isModalOpen && <RegistrationForm onClose={handleCloseModal} />}
+      {isModalOpen && <LoginForm onClose={handleCloseModal} />}
     </>
   );
 };

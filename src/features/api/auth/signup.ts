@@ -13,15 +13,7 @@ export type SignUpState = {
   message?: string;
   success?: boolean;
   data?: {
-    message: string;
-    user: {
-      id: string;
-      name: string | null;
-      email: string;
-      phone: string | null;
-      role: string;
-      createdAt: Date;
-    };
+    message?: string;
   };
 } | null;
 
@@ -77,7 +69,7 @@ export async function signUpUser(
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         name,
         email,
@@ -85,21 +77,12 @@ export async function signUpUser(
         password: hashedPassword,
         role: userRole,
       },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        role: true,
-        createdAt: true,
-      },
     });
 
     return {
       success: true,
       data: {
         message: 'Пользователь успешно зарегистрирован',
-        user,
       },
     };
   } catch (error) {

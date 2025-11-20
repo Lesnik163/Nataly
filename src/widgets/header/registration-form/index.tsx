@@ -3,7 +3,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Input } from '@/shared/ui/input';
 import { PhoneInput } from '@/shared/ui/phone-input';
-import { FormBody, FormHeaderTitle, FormOverlay } from '@/shared/ui/form';
+import {
+  RegistrationFormBody,
+  FormHeaderTitle,
+  FormOverlay,
+} from '@/shared/ui/form';
 import { validateField, validateForm } from '@/shared/lib/validation';
 import {
   registrationSchema,
@@ -33,7 +37,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
 
   // Проверяем валидность всех полей для блокировки кнопки
   const isFormValid = useMemo(() => {
-    // Используем validateForm для проверки всей формы, включая совпадение паролей
     const { isValid } = validateForm(registrationSchema, formData);
     return isValid;
   }, [formData]);
@@ -122,7 +125,11 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
     <FormOverlay onClose={onClose}>
       <ErrorBoundary>
         <FormHeaderTitle title='Регистрация' onClose={onClose} />
-        <FormBody onClose={onClose} errors={errors} isFormValid={isFormValid}>
+        <RegistrationFormBody
+          onClose={onClose}
+          errors={errors}
+          isFormValid={isFormValid}
+        >
           <Input
             id='name'
             name='name'
@@ -186,7 +193,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({
             placeholder='Повторите пароль'
             data-testid='confirmPassword'
           />
-        </FormBody>
+        </RegistrationFormBody>
       </ErrorBoundary>
     </FormOverlay>
   );
