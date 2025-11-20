@@ -5,6 +5,7 @@ import { roboto } from '@/shared/lib/fonts';
 import { HeaderNavigation } from '@/widgets/header';
 import { ErrorBoundary } from '@/shared/ui/error-boundary';
 import { NotificationsContainer } from '@/widgets/notifications';
+import { Providers } from '@/shared/providers/session-provider';
 
 export const metadata: Metadata = {
   title: 'Nataly_Lash',
@@ -39,11 +40,13 @@ export default function RootLayout({
   return (
     <html lang='ru' data-scroll-behavior='smooth'>
       <body className={`${roboto.className} relative antialiased`}>
-        <ErrorBoundary>
-          <HeaderNavigation />
-        </ErrorBoundary>
-        <NotificationsContainer />
-        {children}
+        <Providers>
+          <ErrorBoundary>
+            <HeaderNavigation />
+          </ErrorBoundary>
+          <NotificationsContainer />
+          {children}
+        </Providers>
       </body>
     </html>
   );

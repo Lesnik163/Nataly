@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useActionState, useEffect } from 'react';
-import './form-body.css';
+import React, { useActionState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import '@/shared/ui/form/form-body.css';
 import { signUpUser } from '@/features/api/auth/signup';
 import { Button } from '../../button';
 import { useNotifications } from '@/shared/lib/store';
+import { signIn } from 'next-auth/react';
 
-interface FormProps {
+interface RegistrationFormBodyProps {
   children: React.ReactNode;
   className?: string;
   onClose: () => void;
@@ -14,7 +16,7 @@ interface FormProps {
   isFormValid?: boolean;
 }
 
-export const FormBody: React.FC<FormProps> = ({
+export const RegistrationFormBody: React.FC<RegistrationFormBodyProps> = ({
   children,
   className = '',
   onClose,
@@ -23,19 +25,41 @@ export const FormBody: React.FC<FormProps> = ({
 }) => {
   const [state, formAction, isPending] = useActionState(signUpUser, null);
   const { showSuccess, showError } = useNotifications();
+  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state?.success) {
-      showSuccess(
-        'Регистрация успешна!',
-        state.data?.message || 'Добро пожаловать!',
-        4000,
-      );
-      onClose();
+      const form = formRef.current;
+      if (form) {
+        const formData = new FormData(form);
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
+
+        signIn('credentials', {
+          email,
+          password,
+          redirect: false,
+        }).then(async (result) => {
+          if (result?.ok) {
+            showSuccess(
+              'Регистрация успешна!',
+              state.data?.message || 'Добро пожаловать!',
+              4000,
+            );
+            onClose();
+            // Обновляем сессию и выполняем редирект
+            router.refresh();
+            router.push('/profile');
+          } else {
+            showError('Ошибка регистрации', 'Не удалось создать сессию', 5000);
+          }
+        });
+      }
     } else if (state?.message) {
       showError('Ошибка регистрации', state.message, 5000);
     }
-  }, [state, showSuccess, showError, onClose]);
+  }, [state, showSuccess, showError, onClose, router]);
 
   // Проверяем ошибки валидации полей или общую валидность формы
   const hasErrors =
@@ -43,7 +67,7 @@ export const FormBody: React.FC<FormProps> = ({
 
   return (
     <div className='modal'>
-      <form action={formAction} className={`p-6 ${className}`}>
+      <form ref={formRef} action={formAction} className={`p-6 ${className}`}>
         {children}
         <div className='flex justify-between'>
           <Button

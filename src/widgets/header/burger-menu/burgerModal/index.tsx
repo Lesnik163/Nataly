@@ -1,8 +1,11 @@
 import React, { useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import '../burgerMenu.css';
 import { ModalPortal } from '@/shared/ui/portal/ModalPortal';
 import { RegistrationButton } from '../../registration-button';
+import { LoginButton } from '../../login-button';
+import { LogoutButton } from '../../logout-button';
 
 type BurgerModalProps = {
   isOpen: boolean;
@@ -18,6 +21,8 @@ const menuItems = [
 ];
 
 export const BurgerModal = ({ isOpen, onClose }: BurgerModalProps) => {
+  const { data: session } = useSession();
+
   const handleEnter = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {
@@ -77,7 +82,18 @@ export const BurgerModal = ({ isOpen, onClose }: BurgerModalProps) => {
                 {item.text}
               </Link>
             ))}
-            <RegistrationButton />
+            {session && (
+              <Link
+                href='/profile'
+                className='block rounded-lg px-4 py-3 text-lg font-medium text-rose-800 transition-all duration-200 hover:bg-rose-100/50 hover:text-rose-900'
+                onClick={onClose}
+              >
+                Профиль
+              </Link>
+            )}
+            {session && <LogoutButton />}
+            {!session && <LoginButton />}
+            {!session && <RegistrationButton />}
           </div>
         </div>
       </div>
